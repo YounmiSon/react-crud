@@ -5,11 +5,11 @@ import axios from "axios";
 // 액션 타입
 const CREATE = "board/CREATE";
 const GET_CONTENT = "board/GET_CONTENT";
+const DEL_CONTENT = "board/DEL_CONTENT";
 
 // 액션 생성 함수
 // 글 목록 조회
-// index : 페이지네이션
-// count : 글의 갯수
+// index : 페이지네이션 // count : 글의 갯수
 export const GetContent = (index, count) => {
   return async (dispatch, getState) => {
     const content = await axios({

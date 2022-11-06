@@ -25,7 +25,6 @@ const Board = () => {
   };
 
   const delBtn = (num) => {
-    console.log("Ttt");
     dispatch(DelContent(num));
   };
   return (
@@ -38,6 +37,7 @@ const Board = () => {
             <td>작성자</td>
             <td>작성일</td>
             <td>조회수</td>
+            <td>삭제</td>
           </tr>
         </thead>
         <tbody>
@@ -51,13 +51,16 @@ const Board = () => {
               <td>{user}</td>
               <td>{createdAt}</td>
               <td>{count}</td>
-              <button
+              <td
+                className="cursor-pointer"
                 onClick={(e) => {
+                  // 인자로 이벤트 객체를 전달한다
+                  // console.log(e);
                   delBtn(id);
                 }}
               >
                 삭제
-              </button>
+              </td>
             </tr>
           ))}
           {/* 둘 다 됨
