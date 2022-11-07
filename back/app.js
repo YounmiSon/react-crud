@@ -58,6 +58,13 @@ app.post("/delContent", (req, res) => {
   res.send();
 });
 
+app.post("/board/edit", (req, res) => {
+  // console.log(req.body);
+  const { title, text, user } = req.body;
+  content.update({ title, text, user });
+  res.send(req.body);
+});
+
 app.listen(8000, () => {
   console.log("서버 열림");
 });

@@ -6,6 +6,7 @@ import axios from "axios";
 const CREATE = "board/CREATE";
 const GET_CONTENT = "board/GET_CONTENT";
 const DEL_CONTENT = "board/DEL_CONTENT";
+const GET_CONTENT_DETAIL = "board/GET_CONTENT_DETAIL";
 
 // 액션 생성 함수
 // 글 목록 조회
@@ -66,7 +67,35 @@ export const DelContent = (num) => {
 };
 
 // 글 수정
-export const UpdateContent = () => {};
+export const UpdateContent = (title, text, user) => {
+  return async (dispatch, getState) => {
+    const content = await axios({
+      method: "post",
+      url: "http://localhost:8000/board/edit",
+      data: {
+        title,
+        text,
+        user,
+      },
+    });
+    console.log(content);
+  };
+};
+
+// 글 내용 조회
+export const GetContentDetail = (num) => {
+  return async (dispatch, getState) => {
+    const content = await axios({
+      // offset, limit 쓸거라서 post 방식 사용함
+      method: "post",
+      url: `http://localhost:8000/board/${num}`,
+      data: {
+        num,
+      },
+    });
+    dispatch({ type: "GET_CONTENT_DETAIL", payload: content });
+  };
+};
 
 // 초기값
 const init = {
