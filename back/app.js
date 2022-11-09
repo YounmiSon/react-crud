@@ -65,6 +65,18 @@ app.post("/board/edit", (req, res) => {
   res.send(req.body);
 });
 
+app.get("/board/:id", (req, res) => {
+  let { id } = req.body;
+  console.log(req.body);
+  Content.findOne({
+    where: { num: id },
+  })
+    .then((res) => {
+      res.send(res);
+    })
+    .catch((err) => console.log(err));
+});
+
 app.listen(8000, () => {
   console.log("서버 열림");
 });

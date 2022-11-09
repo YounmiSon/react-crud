@@ -86,13 +86,13 @@ export const UpdateContent = (title, text, user) => {
 export const GetContentDetail = (num) => {
   return async (dispatch, getState) => {
     const content = await axios({
-      // offset, limit 쓸거라서 post 방식 사용함
       method: "post",
       url: `http://localhost:8000/board/${num}`,
       data: {
-        num,
+        num: num,
       },
     });
+    const { data } = content;
     dispatch({ type: "GET_CONTENT_DETAIL", payload: content });
   };
 };
@@ -122,18 +122,22 @@ function reducer(state = init, action) {
   switch (type) {
     // 대문자로 하는건 상태값을 나눌 때의 규칙
     case "CREATE":
-      console.log("글 등록");
       // 주소가 바뀌어야 값이 변했다고 인지하고 업데이트한다
       // ...로 값을 복사해준다
       return { ...state };
 
     case "GET_CONTENT":
-      console.log("글 조회");
       console.log(payload);
       return { ...state, content: payload.data };
 
     case "DEL_CONTENT":
       return { ...state };
+
+    case "GET_CONTENT_DETAIL":
+      return {
+        ...state,
+        content: [...payload],
+      };
 
     // 위의 case를 하나도 만족하지 않았을 때
     default:

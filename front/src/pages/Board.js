@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // 액션 함수 import
-import { DelContent, GetContent } from "../modules/board";
+import { DelContent, GetContent, GetContentDetail } from "../modules/board";
 
 const Board = () => {
   const nav = useNavigate();
@@ -27,6 +27,12 @@ const Board = () => {
   const delBtn = (num) => {
     dispatch(DelContent(num));
   };
+
+  const showDetail = (num) => {
+    nav(`/board/${num}`);
+    dispatch(GetContentDetail(num));
+  };
+
   return (
     <div className="flex flex-col items-center justify-center mt-8">
       <table className="w-3/5">
@@ -47,7 +53,14 @@ const Board = () => {
               className="text-center bg-white h-12 border-[1px] border-b-black"
             >
               <td>{idx + 1}</td>
-              <td>{title}</td>
+              <td
+                className="cursor-pointer"
+                onClick={(e) => {
+                  showDetail(id);
+                }}
+              >
+                {title}
+              </td>
               <td>{user}</td>
               <td>{createdAt}</td>
               <td>{count}</td>

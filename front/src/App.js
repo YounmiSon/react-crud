@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Main, Login, Join, Board, Write } from "./pages";
+import { Main, Login, Join, Board, Write, ContentDetail } from "./pages";
 import { Header, Nav } from "./components";
 // import { useDispatch } from "react-redux";
 
@@ -21,6 +21,7 @@ function App() {
         {/*게시판 관련*/}
         <Route path="/board" element={<Board />} />
         <Route path="/board/write" element={<Write />} />
+        <Route path="/board/:id" element={<ContentDetail />} />
       </Routes>
     </>
   );
