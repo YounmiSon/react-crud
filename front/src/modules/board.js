@@ -27,7 +27,7 @@ export const GetContent = (index, count) => {
 };
 
 // 글 생성
-export const CreateContent = (title, text, user) => {
+export const CreateContent = (title, text, user, nav) => {
   return async (dispatch, getState) => {
     const content = await axios({
       method: "post",
@@ -39,6 +39,7 @@ export const CreateContent = (title, text, user) => {
       },
     });
     console.log(content);
+    nav("/board");
   };
 };
 
@@ -93,6 +94,7 @@ export const GetContentDetail = (num) => {
       },
     });
     const { data } = content;
+    console.log(content);
     dispatch({ type: "GET_CONTENT_DETAIL", payload: content });
   };
 };
@@ -109,6 +111,7 @@ const init = {
       count: 0,
     },
   ],
+  contents: {},
   index: 0,
   count: 10,
 };
@@ -136,7 +139,7 @@ function reducer(state = init, action) {
     case "GET_CONTENT_DETAIL":
       return {
         ...state,
-        content: [...payload],
+        contents: { ...payload },
       };
 
     // 위의 case를 하나도 만족하지 않았을 때

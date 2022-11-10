@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { CreateContent } from "../modules/board";
 
 const Write = () => {
@@ -8,7 +9,7 @@ const Write = () => {
   const user = useRef();
 
   const dispatch = useDispatch();
-
+  const nav = useNavigate();
   // 이렇게 값이 제대로 넘어오는지, 액션되는지 확인한 뒤에 만들기
   // function test() {
   //   console.log(title.current.value);
@@ -31,7 +32,12 @@ const Write = () => {
       return;
     }
     dispatch(
-      CreateContent(title.current.value, text.current.value, user.current.value)
+      CreateContent(
+        title.current.value,
+        text.current.value,
+        user.current.value,
+        nav
+      )
     );
   }
   return (

@@ -65,14 +65,16 @@ app.post("/board/edit", (req, res) => {
   res.send(req.body);
 });
 
-app.get("/board/:id", (req, res) => {
-  let { id } = req.body;
-  console.log(req.body);
-  Content.findOne({
-    where: { num: id },
-  })
-    .then((res) => {
-      res.send(res);
+app.post("/board/:num", (req, res) => {
+  let { num } = req.body;
+  // console.log(req.body);
+  content
+    .findOne({
+      where: { id: num },
+    })
+    .then((result) => {
+      // console.log(result.dataValues);
+      res.send(result);
     })
     .catch((err) => console.log(err));
 });
