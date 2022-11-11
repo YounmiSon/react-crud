@@ -56,12 +56,13 @@ app.post("/delContent", (req, res) => {
   const { num } = req.body;
   content.destroy({ where: { id: num } });
   res.send();
-});
+}); 
 
 app.post("/board/edit", (req, res) => {
   // console.log(req.body);
-  const { title, text, user } = req.body;
-  content.update({ title, text, user });
+  const { content } = req.body;
+  console.log(req.body);
+  content.update({ title, text, user }, { where: { num: num } });
   res.send(req.body);
 });
 

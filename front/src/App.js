@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Main, Login, Join, Board, Write, ContentDetail } from "./pages";
+import { Main, Login, Join, Board, Write, ContentDetail, Edit } from "./pages";
 import { Header, Nav } from "./components";
 // import { useDispatch } from "react-redux";
 
@@ -22,6 +22,7 @@ function App() {
         <Route path="/board" element={<Board />} />
         <Route path="/board/write" element={<Write />} />
         <Route path="/board/:id" element={<ContentDetail />} />
+        <Route path="/board/:id/edit" element={<Edit />} />
       </Routes>
     </>
   );

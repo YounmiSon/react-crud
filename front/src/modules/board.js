@@ -7,6 +7,7 @@ const CREATE = "board/CREATE";
 const GET_CONTENT = "board/GET_CONTENT";
 const DEL_CONTENT = "board/DEL_CONTENT";
 const GET_CONTENT_DETAIL = "board/GET_CONTENT_DETAIL";
+const EDIT_CONTENT = "board/EDIT_CONTENT";
 
 // 액션 생성 함수
 // 글 목록 조회
@@ -38,13 +39,13 @@ export const CreateContent = (title, text, user, nav) => {
         user,
       },
     });
-    console.log(content);
+    alert("글이 등록되었습니다");
     nav("/board");
   };
 };
 
 // 글 삭제
-export const DelContent = (num) => {
+export const DelContent = (num, nav) => {
   return async (dispatch, getState) => {
     await axios({
       method: "post",
@@ -53,6 +54,9 @@ export const DelContent = (num) => {
         num,
       },
     });
+    alert(`${num}번 글 삭제됨`);
+    nav("/board");
+
     // const { index, count } = getState();
     // const content = await axios({
     //   // offset, limit 쓸거라서 post 방식 사용함
@@ -68,20 +72,20 @@ export const DelContent = (num) => {
 };
 
 // 글 수정
-export const UpdateContent = (title, text, user) => {
-  return async (dispatch, getState) => {
-    const content = await axios({
-      method: "post",
-      url: "http://localhost:8000/board/edit",
-      data: {
-        title,
-        text,
-        user,
-      },
-    });
-    console.log(content);
-  };
-};
+// export const UpdateContent = (title, text, user) => {
+//   return async (dispatch, getState) => {
+//     const content = await axios({
+//       method: "post",
+//       url: "http://localhost:8000/board/edit",
+//       data: {
+//         title,
+//         text,
+//         user,
+//       },
+//     });
+//     console.log(content);
+//   };
+// };
 
 // 글 내용 조회
 export const GetContentDetail = (num) => {
@@ -90,12 +94,27 @@ export const GetContentDetail = (num) => {
       method: "post",
       url: `http://localhost:8000/board/${num}`,
       data: {
-        num: num,
+        num,
       },
     });
     const { data } = content;
     console.log(content);
     dispatch({ type: "GET_CONTENT_DETAIL", payload: content });
+  };
+};
+
+export const editContent = (contents, num) => {
+  return async (dispatch, getState) => {
+    const content = await axios({
+      method: "post",
+      url: "http://localhost:8000/board/edit",
+      data: {
+        contents,
+      },
+    });
+    const { data } = content;
+    console.log(content);
+    dispatch({ type: "EDIT_CONTENT", payload: content });
   };
 };
 
@@ -130,7 +149,7 @@ function reducer(state = init, action) {
       return { ...state };
 
     case "GET_CONTENT":
-      console.log(payload);
+      // console.log(payload);
       return { ...state, content: payload.data };
 
     case "DEL_CONTENT":
@@ -139,7 +158,12 @@ function reducer(state = init, action) {
     case "GET_CONTENT_DETAIL":
       return {
         ...state,
-        contents: { ...payload },
+        contents: { ...payload.data },
+      };
+    case "EDIT_CONTENT":
+      return {
+        ...state,
+        contents: { ...payload.data },
       };
 
     // 위의 case를 하나도 만족하지 않았을 때

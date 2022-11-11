@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 // import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Pagination, Search } from "../components";
 // 액션 함수 import
 import { DelContent, GetContent, GetContentDetail } from "../modules/board";
 
@@ -17,7 +18,7 @@ const Board = () => {
   }, []);
 
   useEffect(() => {
-    console.log(content);
+    // console.log(content);
   }, [content]);
 
   const writePost = () => {
@@ -30,38 +31,38 @@ const Board = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mt-8">
-      <table className="w-3/5">
-        <thead>
-          <tr className="text-center bg-gray-200 h-12 border-[1px] border-b-black">
-            <td>번호</td>
-            <td>제목</td>
-            <td>작성자</td>
-            <td>작성일</td>
-            <td>조회수</td>
-          </tr>
-        </thead>
-        <tbody>
+    <>
+      <div className="flex flex-col items-center justify-center mt-8">
+        <div className="w-3/5">
+          <ul className="grid grid-cols-[1fr_4fr_1fr_3fr_1fr] items-center text-center bg-gray-200 h-12 border-[1px] border-b-black">
+            <li>번호</li>
+            <li>제목</li>
+            <li>작성자</li>
+            <li>작성일</li>
+            <li>조회수</li>
+          </ul>
           {content.map(({ id, title, user, createdAt, count }, idx) => (
-            <tr
+            <ul
               key={idx}
-              className="text-center bg-white h-12 border-[1px] border-b-black"
+              className="grid grid-cols-[1fr_4fr_1fr_3fr_1fr] items-center text-center h-12 border-[1px] border-b-black"
             >
-              <td>{idx + 1}</td>
-              <td
+              <li>{idx + 1}</li>
+              <li
                 className="cursor-pointer"
                 onClick={(e) => {
                   showDetail(id);
                 }}
               >
                 {title}
-              </td>
-              <td>{user}</td>
-              <td>{createdAt}</td>
-              <td>{count}</td>
-            </tr>
+              </li>
+              <li>{user}</li>
+              <li>{createdAt}</li>
+              <li>{count}</li>
+            </ul>
           ))}
-          {/* 둘 다 됨
+        </div>
+
+        {/* 둘 다 됨
           {content.map((el, idx) => (
             <tr
               className="text-center bg-white h-12 border-[1px] border-b-black"
@@ -74,15 +75,18 @@ const Board = () => {
               <td>{el.count}</td>
             </tr>
           ))} */}
-        </tbody>
-      </table>
-      <button
-        onClick={writePost}
-        className="flex items-center justify-center my-8"
-      >
-        글쓰기
-      </button>
-    </div>
+        <Pagination />
+        <div className="flex mt-4">
+          <Search />
+          <button
+            onClick={writePost}
+            className="cursor-pointer bg-gray-200 p-3 rounded-lg mt-4 ml-4 flex items-center justify-center"
+          >
+            글쓰기
+          </button>
+        </div>
+      </div>
+    </>
   );
 };
 
