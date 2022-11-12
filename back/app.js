@@ -39,8 +39,10 @@ app.post("/board/write", (req, res) => {
 //   res.send();
 // });
 
+// 페이지 네이션
 app.post("/board", async (req, res) => {
   const { index, count } = req.body;
+  console.log(req.body);
   const contents = await content.findAll({
     // 몇 개를 자를지
     offset: index * count,
@@ -48,6 +50,15 @@ app.post("/board", async (req, res) => {
     limit: 10,
   });
   res.send(contents);
+});
+
+// 전체 글 갯수를 센다(localhost:8000에서 볼 수 있음)
+app.get("/getContentCount", async (req, res) => {
+  // count 함수 사용
+  const contentCount = await content.count();
+  console.log(contentCount);
+  // send로 하면 문자열?이라서 오류가 남
+  res.json(contentCount);
 });
 
 // params로 하면 get 방식사용

@@ -8,8 +8,6 @@ const GET_CONTENT = "board/GET_CONTENT";
 const DEL_CONTENT = "board/DEL_CONTENT";
 const GET_CONTENT_DETAIL = "board/GET_CONTENT_DETAIL";
 const EDIT_CONTENT = "board/EDIT_CONTENT";
-const PREV_PAGE = "board/PREV_PAGE";
-const NEXT_PAGE = "board/NEXT_PAGE";
 
 // 액션 생성 함수
 // 글 목록 조회
@@ -119,7 +117,10 @@ const init = {
     },
   ],
   contents: {},
+  // 페이지 네이션
+  // 시작 페이지
   index: 0,
+  // 끝나는 페이지, 몇 개씩 보여줄지
   count: 10,
 };
 
@@ -153,12 +154,6 @@ function reducer(state = init, action) {
         ...state,
         contents: { ...payload.data },
       };
-
-    case "PREV_PAGE":
-      return { ...state };
-
-    case "NEXT_PAGE":
-      return { ...state };
 
     // 위의 case를 하나도 만족하지 않았을 때
     default:

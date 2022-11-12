@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -6,16 +6,20 @@ import { Pagination, Search } from "../components";
 // 액션 함수 import
 import { DelContent, GetContent, GetContentDetail } from "../modules/board";
 
-const Board = () => {
+const Board = ({ contentCount }) => {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const content = useSelector((state) => state.board.content);
 
+  // 눌렀을 때 보여줄 페이지 , 초기값은 0
+  const [page, setPage] = useState(0);
+
+  // GetContent(여기에 위의 값을 전달,10)
   useEffect(() => {
-    dispatch(GetContent(0, 10));
+    dispatch(GetContent(page, 10));
     // console.log(content);
     // 배열 안에 주시할 값을 넣어줌, 값이 변하면 위에 있는 console에 찍힌다
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     // console.log(content);
@@ -75,7 +79,7 @@ const Board = () => {
               <td>{el.count}</td>
             </tr>
           ))} */}
-        <Pagination />
+        <Pagination setPage={setPage} contentCount={contentCount} />
         <div className="flex mt-4">
           <Search />
           <button
