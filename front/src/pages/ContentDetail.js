@@ -16,12 +16,15 @@ const ContentDetail = (id) => {
     dispatch(GetContentDetail(num));
   }, []);
 
-  const delBtn = (nav) => {
+  // 전역변수보다 매개변수가 먼저라서 매개변수로 nav를 전달하니까 빈 객체가 들어온거임
+  // 여기서 매개변수로 nav 전달하면 안됨
+  const delBtn = () => {
     const num = location.pathname.split("/board/")[1];
     dispatch(DelContent(num, nav));
   };
   const editBtn = () => {
-    dispatch(editContent(contents));
+    const num = location.pathname.split("/board/")[1];
+    nav("/board/edit/" + num);
   };
   return (
     <div className="flex flex-col items-center justify-center mt-8">
@@ -45,7 +48,7 @@ const ContentDetail = (id) => {
         <button
           className="cursor-pointer bg-gray-200 p-3 rounded-lg mt-8 mr-4"
           onClick={(e) => {
-            delBtn(id);
+            delBtn();
           }}
         >
           삭제
@@ -53,7 +56,7 @@ const ContentDetail = (id) => {
         <button
           className="cursor-pointer bg-gray-200 p-3 rounded-lg mt-8"
           onClick={(e) => {
-            editBtn(id);
+            editBtn();
           }}
         >
           수정

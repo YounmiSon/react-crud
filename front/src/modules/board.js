@@ -8,6 +8,8 @@ const GET_CONTENT = "board/GET_CONTENT";
 const DEL_CONTENT = "board/DEL_CONTENT";
 const GET_CONTENT_DETAIL = "board/GET_CONTENT_DETAIL";
 const EDIT_CONTENT = "board/EDIT_CONTENT";
+const PREV_PAGE = "board/PREV_PAGE";
+const NEXT_PAGE = "board/NEXT_PAGE";
 
 // 액션 생성 함수
 // 글 목록 조회
@@ -54,38 +56,14 @@ export const DelContent = (num, nav) => {
         num,
       },
     });
-    alert(`${num}번 글 삭제됨`);
-    nav("/board");
-
-    // const { index, count } = getState();
-    // const content = await axios({
-    //   // offset, limit 쓸거라서 post 방식 사용함
-    //   method: "post",
-    //   url: "http://localhost:8000/board",
-    //   data: {
-    //     index,
-    //     count,
-    //   },
-    // });
-    // dispatch({ type: "GET_CONTENT", payload: content });
+    try {
+      alert(`${num}번 글 삭제됨`);
+      nav("/board");
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
-
-// 글 수정
-// export const UpdateContent = (title, text, user) => {
-//   return async (dispatch, getState) => {
-//     const content = await axios({
-//       method: "post",
-//       url: "http://localhost:8000/board/edit",
-//       data: {
-//         title,
-//         text,
-//         user,
-//       },
-//     });
-//     console.log(content);
-//   };
-// };
 
 // 글 내용 조회
 export const GetContentDetail = (num) => {
@@ -103,18 +81,28 @@ export const GetContentDetail = (num) => {
   };
 };
 
-export const editContent = (contents, num) => {
+// 글 수정하기
+export const editContent = (title, text, user, id, nav) => {
   return async (dispatch, getState) => {
     const content = await axios({
       method: "post",
-      url: "http://localhost:8000/board/edit",
+      url: `http://localhost:8000/board/edit/${id}`,
       data: {
-        contents,
+        title,
+        text,
+        user,
+        id,
       },
     });
     const { data } = content;
-    console.log(content);
+    console.log(content.data);
     dispatch({ type: "EDIT_CONTENT", payload: content });
+    try {
+      alert(`${id}번 글 수정됨`);
+      nav("/board");
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
@@ -165,6 +153,12 @@ function reducer(state = init, action) {
         ...state,
         contents: { ...payload.data },
       };
+
+    case "PREV_PAGE":
+      return { ...state };
+
+    case "NEXT_PAGE":
+      return { ...state };
 
     // 위의 case를 하나도 만족하지 않았을 때
     default:

@@ -22,7 +22,7 @@ function App() {
         <Route path="/board" element={<Board />} />
         <Route path="/board/write" element={<Write />} />
         <Route path="/board/:id" element={<ContentDetail />} />
-        <Route path="/board/:id/edit" element={<Edit />} />
+        <Route path="/board/edit/:id" element={<Edit />} />
       </Routes>
     </>
   );

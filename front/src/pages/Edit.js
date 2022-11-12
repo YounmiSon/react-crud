@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { editContent } from "../modules/board";
 
@@ -9,7 +9,15 @@ const Edit = () => {
   const user = useRef();
 
   const dispatch = useDispatch();
+
+  const contents = useSelector((state) => state.board.contents);
   const nav = useNavigate();
+
+  useEffect(() => {
+    title.current.value = contents.title;
+    text.current.value = contents.text;
+    user.current.value = contents.user;
+  }, []);
 
   function editPost() {
     // 예외처리 여기서 해줌
@@ -30,9 +38,10 @@ const Edit = () => {
         title.current.value,
         text.current.value,
         user.current.value,
+        contents.id,
         nav
       )
-    );
+    )
   }
 
   return (
