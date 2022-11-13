@@ -5,16 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { Pagination, Search } from "../components";
 // 액션 함수 import
 import { DelContent, GetContent, GetContentDetail } from "../modules/board";
-
+// App.js에서 props로 글 갯수를 받아옴 
 const Board = ({ contentCount }) => {
   const nav = useNavigate();
   const dispatch = useDispatch();
+  
+  // 리듀서에서 보낸 content : payload.data
   const content = useSelector((state) => state.board.content);
 
-  // 눌렀을 때 보여줄 페이지 , 초기값은 0
+  // 눌렀을 때 보여줄 페이지가 있는 인덱스 번호 1,2,3 중.., 초기값은 0
   const [page, setPage] = useState(0);
 
-  // GetContent(여기에 위의 값을 전달,10)
+  // GetContent(여기에 위의 state값을 전달,10)
   useEffect(() => {
     dispatch(GetContent(page, 10));
     // console.log(content);
@@ -22,7 +24,7 @@ const Board = ({ contentCount }) => {
   }, [page]);
 
   useEffect(() => {
-    // console.log(content);
+    console.log(content);
   }, [content]);
 
   const writePost = () => {
@@ -45,7 +47,26 @@ const Board = ({ contentCount }) => {
             <li>작성일</li>
             <li>조회수</li>
           </ul>
-          {content.map(({ id, title, user, createdAt, count }, idx) => (
+          {content.map((el, idx) => (
+            <ul
+              key={idx}
+              className="grid grid-cols-[1fr_4fr_1fr_3fr_1fr] items-center text-center h-12 border-[1px] border-b-black"
+            >
+              <li>{idx + 1}</li>
+              <li
+                className="cursor-pointer"
+                onClick={(e) => {
+                  showDetail(idx);
+                }}
+              >
+                {el.title}
+              </li>
+              <li>{el.user}</li>
+              <li>{el.createdAt}</li>
+              <li>{el.count}</li>
+            </ul>
+          ))}
+          {/* {content.map(({ id, title, user, createdAt, count }, idx) => (
             <ul
               key={idx}
               className="grid grid-cols-[1fr_4fr_1fr_3fr_1fr] items-center text-center h-12 border-[1px] border-b-black"
@@ -63,22 +84,9 @@ const Board = ({ contentCount }) => {
               <li>{createdAt}</li>
               <li>{count}</li>
             </ul>
-          ))}
+          ))} */}
         </div>
 
-        {/* 둘 다 됨
-          {content.map((el, idx) => (
-            <tr
-              className="text-center bg-white h-12 border-[1px] border-b-black"
-              key={idx}
-            >
-              <td>{el.idx}</td>
-              <td>{el.title}</td>
-              <td>{el.user}</td>
-              <td>{el.createdAt}</td>
-              <td>{el.count}</td>
-            </tr>
-          ))} */}
         <Pagination setPage={setPage} contentCount={contentCount} />
         <div className="flex mt-4">
           <Search />

@@ -41,22 +41,25 @@ app.post("/board/write", (req, res) => {
 
 // 페이지 네이션
 app.post("/board", async (req, res) => {
+  // 액션함수 GetContent에서 보낸 데이터를 여기서 받은 다음
   const { index, count } = req.body;
   console.log(req.body);
+  // 모델에서 findAll을 이용해 전부 가져오고
   const contents = await content.findAll({
     // 몇 개를 자를지
     offset: index * count,
     // 몇 개를 가져올지
     limit: 10,
   });
-  res.send(contents);
+  res.send(contents); // 여기서 보낸다
 });
 
 // 전체 글 갯수를 센다(localhost:8000에서 볼 수 있음)
+// http://localhost:8000/getContentCount
 app.get("/getContentCount", async (req, res) => {
-  // count 함수 사용
+  // count 함수 사용(sequelize 쓰니까)
   const contentCount = await content.count();
-  console.log(contentCount);
+  console.log(contentCount); // 글 갯수찍힌다
   // send로 하면 문자열?이라서 오류가 남
   res.json(contentCount);
 });
@@ -70,7 +73,7 @@ app.post("/delContent", (req, res) => {
 });
 
 app.post("/board/edit/:id", (req, res) => {
-  console.log("sdfsfsds", req.params.id);
+  // console.log("sdfsfsds", req.params.id);
   const id = req.params.id;
   const { title, text, user } = req.body;
   //console.log("fsf", title, text, user, id);

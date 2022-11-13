@@ -15,7 +15,7 @@ const EDIT_CONTENT = "board/EDIT_CONTENT";
 export const GetContent = (index, count) => {
   return async (dispatch, getState) => {
     const content = await axios({
-      // offset, limit 쓸거라서 post 방식 사용함
+      // offset, limit 쓸거라서 post 방식 사용함 -> 서버 측으로 보낸다
       method: "post",
       url: "http://localhost:8000/board",
       data: {
@@ -23,6 +23,7 @@ export const GetContent = (index, count) => {
         count,
       },
     });
+    // 서버 처리(findAll ~ res.send)가 끝난다음 여기서 리듀서로 보내 case를 찾는다
     dispatch({ type: "GET_CONTENT", payload: content });
   };
 };
@@ -120,7 +121,7 @@ const init = {
   // 페이지 네이션
   // 시작 페이지
   index: 0,
-  // 끝나는 페이지, 몇 개씩 보여줄지
+  // 몇 개씩 보여줄지
   count: 10,
 };
 

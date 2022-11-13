@@ -12,12 +12,15 @@ function App() {
   //   dispatch({ type: "CREATE", payload: "gg" });
   // };
 
-  // 전체 페이지 갯수 state
+  // 전체 글 갯수 state
   const [contentCount, setcontentCount] = useState();
 
   // useEffect 쓸건데 async 써야하면 밖에서 함수를 정의한다음에 가져다 쓴다
   async function getContent() {
     const count = await axios.get("http://localhost:8000/getContentCount");
+    // console.log(count);
+    // {data: 22, status: 200, statusText: 'OK', headers: AxiosHeaders, config: {…}, …}
+    // 위와 같이 나오니까 .data해서 필요한 정보(=글 갯수)만 가져온다
     setcontentCount(count.data);
   }
 
