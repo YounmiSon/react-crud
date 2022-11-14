@@ -6,7 +6,6 @@ import { editContent } from "../modules/board";
 const Edit = () => {
   const title = useRef();
   const text = useRef();
-  const user = useRef();
 
   const dispatch = useDispatch();
 
@@ -16,7 +15,6 @@ const Edit = () => {
   useEffect(() => {
     title.current.value = contents.title;
     text.current.value = contents.text;
-    user.current.value = contents.user;
   }, []);
 
   function editPost() {
@@ -29,25 +27,14 @@ const Edit = () => {
       alert("내용을 입력해주세요");
       return;
     }
-    if (user.current.value === "") {
-      alert("작성자를 입력하세요");
-      return;
-    }
     dispatch(
-      editContent(
-        title.current.value,
-        text.current.value,
-        user.current.value,
-        contents.id,
-        nav
-      )
-    )
+      editContent(title.current.value, text.current.value, contents.id, nav)
+    );
   }
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <label className="mt-8">작성자</label>
-      <input ref={user} className="borer-black border-[2px] w-96" />
+      <label className="my-8">작성자 : {contents.user}</label>
       <label>제목</label>
       <input ref={title} className="borer-black border-[2px] w-96" />
       <label>내용</label>

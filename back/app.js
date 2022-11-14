@@ -75,9 +75,9 @@ app.post("/delContent", (req, res) => {
 app.post("/board/edit/:id", (req, res) => {
   // console.log("sdfsfsds", req.params.id);
   const id = req.params.id;
-  const { title, text, user } = req.body;
+  const { title, text } = req.body;
   //console.log("fsf", title, text, user, id);
-  content.update({ title, text, user }, { where: { id: id } });
+  content.update({ title, text }, { where: { id: id } });
   res.send(req.body);
 });
 
