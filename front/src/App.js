@@ -29,12 +29,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(contentCount);
+    // console.log(contentCount);
   }, [contentCount]);
 
   return (
     <>
-      <Header />
       <Nav />
       <Routes>
         <Route path="/" element={<Main />} />

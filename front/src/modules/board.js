@@ -81,7 +81,7 @@ export const GetContentDetail = (num) => {
 };
 
 // 글 수정하기
-export const editContent = (title, text, user, id, nav) => {
+export const editContent = (title, text, id, nav) => {
   return async (dispatch, getState) => {
     const content = await axios({
       method: "post",
@@ -89,7 +89,6 @@ export const editContent = (title, text, user, id, nav) => {
       data: {
         title,
         text,
-        user,
         id,
       },
     });

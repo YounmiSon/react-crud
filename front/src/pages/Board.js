@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Pagination, Search } from "../components";
 // 액션 함수 import
-import { DelContent, GetContent, GetContentDetail } from "../modules/board";
-// App.js에서 props로 글 갯수를 받아옴 
+import { GetContent, GetContentDetail } from "../modules/board";
+// App.js에서 props로 글 갯수를 받아옴
 const Board = ({ contentCount }) => {
   const nav = useNavigate();
   const dispatch = useDispatch();
-  
+
   // 리듀서에서 보낸 content : payload.data
   const content = useSelector((state) => state.board.content);
 
@@ -24,7 +24,7 @@ const Board = ({ contentCount }) => {
   }, [page]);
 
   useEffect(() => {
-    console.log(content);
+    // console.log(content);
   }, [content]);
 
   const writePost = () => {
@@ -47,7 +47,7 @@ const Board = ({ contentCount }) => {
             <li>작성일</li>
             <li>조회수</li>
           </ul>
-          {content.map((el, idx) => (
+          {/* {content.map((el, idx) => (
             <ul
               key={idx}
               className="grid grid-cols-[1fr_4fr_1fr_3fr_1fr] items-center text-center h-12 border-[1px] border-b-black"
@@ -65,8 +65,8 @@ const Board = ({ contentCount }) => {
               <li>{el.createdAt}</li>
               <li>{el.count}</li>
             </ul>
-          ))}
-          {/* {content.map(({ id, title, user, createdAt, count }, idx) => (
+          ))} */}
+          {content.map(({ id, title, user, createdAt, count }, idx) => (
             <ul
               key={idx}
               className="grid grid-cols-[1fr_4fr_1fr_3fr_1fr] items-center text-center h-12 border-[1px] border-b-black"
@@ -84,7 +84,7 @@ const Board = ({ contentCount }) => {
               <li>{createdAt}</li>
               <li>{count}</li>
             </ul>
-          ))} */}
+          ))}
         </div>
 
         <Pagination setPage={setPage} contentCount={contentCount} />
