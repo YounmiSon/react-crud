@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const Pagination = ({ contentCount, setPage }) => {
   const [count, setcount] = useState();
+  const temp = Math.ceil(contentCount / 10);
 
   // 페이지 번호 목록? [1,2,3,4,...] 그리는 거
   useEffect(() => {
@@ -10,7 +11,7 @@ const Pagination = ({ contentCount, setPage }) => {
     const temp = Math.ceil(contentCount / 10);
     // 처음에 데이터를 가져오기 전에는 빈값이니까 undefined가 되고
     // undefined가 아니게 되면 그때 값을 불러오게 된다
-    if (contentCount != undefined) {
+    if (contentCount !== undefined) {
       // 아까 temp의 값을 새로운 배열로 만들어서 넣어준다
       // fill은 배열을 해당 value값으로 채워주는 함수, 새로 만들어져 비어있는 배열을 0으로 채워준다
       const arr = new Array(temp).fill(0);
@@ -34,7 +35,14 @@ const Pagination = ({ contentCount, setPage }) => {
   return (
     <div className="mt-4">
       <ul className="flex cursor-pointer">
-        <li className="px-2">이전</li>
+        <li
+          className="px-2"
+          onClick={() => {
+            changePage(0);
+          }}
+        >
+          &lt;&lt;
+        </li>
         {/*undefined가 아니면 map 돌리고 undefined이면 null*/}
         {count !== undefined
           ? count.map((el, idx) => (
@@ -49,7 +57,14 @@ const Pagination = ({ contentCount, setPage }) => {
               </li>
             ))
           : null}
-        <li className="px-2">다음</li>
+        <li
+          className="px-2"
+          onClick={() => {
+            changePage(temp - 1);
+          }}
+        >
+          &gt;&gt;
+        </li>
       </ul>
     </div>
   );
