@@ -71,7 +71,9 @@ const Board = ({ contentCount }) => {
               key={idx}
               className="grid grid-cols-[1fr_4fr_1fr_3fr_1fr] items-center text-center h-12 border-[1px] border-b-black"
             >
-              <li>{idx + 1}</li>
+              {/* 첫번째 페이지에서는 idx + 1로 처리하고 그 이상이면 * 10 하고 idx + 1
+              그냥 id나 idx 등으로 찍었을 때 어케 나오는지 보고 계산해서 잘 쓰자... */}
+              <li>{page === 0 ? idx + 1 : page * 10 + idx + 1}</li>
               <li
                 className="cursor-pointer"
                 onClick={(e) => {
